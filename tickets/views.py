@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework import mixins, generics , viewsets
 from rest_framework.authentication import TokenAuthentication
+from .permissions import IsAuthorOrReadOnly
 # Create your views here.
 
 
@@ -208,3 +209,9 @@ def new_reservation(request):
     reservation.movie = movie
     reservation.save()
     return Response(status=status.HTTP_201_CREATED)
+
+#10 post author editor
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthorOrReadOnly]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

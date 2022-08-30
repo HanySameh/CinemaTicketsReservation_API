@@ -14,15 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from tickets import views
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 
 router = DefaultRouter()
-router.register('guests',views.Viewsets_guest)
-router.register('movie',views.Viewsets_movie)
-router.register('reservation',views.Viewsets_reservation)
+router.register('guests', views.Viewsets_guest)
+router.register('movie', views.Viewsets_movie)
+router.register('reservation', views.Viewsets_reservation)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,32 +43,35 @@ urlpatterns = [
 
     # 4.2 GET PUT DELETE from rest framework class based view APIView
     path('rest/cbv/<int:pk>', views.CBV_pk.as_view()),
-    
-    #5.1 GET POST from rest framework class based view mixins
+
+    # 5.1 GET POST from rest framework class based view mixins
     path('rest/mixins/', views.Mixins_list.as_view()),
 
-    #5.2 GET PUT DELETE from rest framework class based view mixins
+    # 5.2 GET PUT DELETE from rest framework class based view mixins
     path('rest/mixins/<int:pk>', views.Mixins_pk.as_view()),
-    
-    #6.1 GET POST from rest framework class based view generics
+
+    # 6.1 GET POST from rest framework class based view generics
     path('rest/generics/', views.Generics_list.as_view()),
 
-    #6.2 GET PUT DELETE from rest framework class based view generics
+    # 6.2 GET PUT DELETE from rest framework class based view generics
     path('rest/generics/<int:pk>', views.Generics_pk.as_view()),
-    
-    #viewsets
-    path('rest/viewsets/',include(router.urls)),
-    
-    #8 find movie 
+
+    # viewsets
+    path('rest/viewsets/', include(router.urls)),
+
+    # 8 find movie
     path('fbv/findmovie', views.find_movie),
 
-    #9 new reservation
-    path('fbv/newreservation',views.new_reservation),
-    
-    #auth url
-    path('api-auth',include('rest_framework.urls')),
-    
-    #auth token
-    path('api-auth-token',obtain_auth_token),
+    # 9 new reservation
+    path('fbv/newreservation', views.new_reservation),
+
+    # auth url
+    path('api-auth', include('rest_framework.urls')),
+
+    # auth token
+    path('api-auth-token', obtain_auth_token),
+
+    # 12 Post pk generics Post_pk
+    path('post/generics/<int:pk>', views.Post_pk.as_view()),
 
 ]
